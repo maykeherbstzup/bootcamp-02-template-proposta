@@ -1,5 +1,8 @@
 package com.nossocartao.proposta.Proposal;
 
+import com.nossocartao.proposta.shared.validation.Document;
+import com.nossocartao.proposta.shared.validation.Unique;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -8,6 +11,10 @@ import java.math.BigDecimal;
 
 public class NewProposalRequest {
     @NotBlank
+    @Document
+    @Unique(entityClass = Proposal.class, fieldName = "document", errorMessage = "Já existe uma proposta em andamento" +
+            " para" +
+            " este documento")
     private String document;
 
     @NotBlank
@@ -26,6 +33,7 @@ public class NewProposalRequest {
 
     public NewProposalRequest(@NotBlank String document, @NotBlank @Email String email, @NotBlank String name,
                               @NotBlank String address, @NotNull @Positive BigDecimal salary) {
+        System.out.println("Passou");
         this.document = document;
         this.email = email;
         this.name = name;
