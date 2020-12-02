@@ -37,6 +37,9 @@ public class Proposal {
     @Positive
     private BigDecimal salary;
 
+    @Enumerated
+    private ProposalStatus status;
+
     @Deprecated
     public Proposal() {
     }
@@ -60,7 +63,19 @@ public class Proposal {
         return id;
     }
 
+    public String getDocument() {
+        return document;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     private String sanitizeDocument(String document) {
         return document.replace(".", "").replace("-", "").replace("/", "");
+    }
+
+    public void setStatus(ProposalStatus status) {
+        this.status = status;
     }
 }
