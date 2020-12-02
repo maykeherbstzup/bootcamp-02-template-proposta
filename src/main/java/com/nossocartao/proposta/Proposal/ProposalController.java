@@ -1,5 +1,7 @@
 package com.nossocartao.proposta.Proposal;
 
+import com.nossocartao.proposta.shared.service.CreditCard.CreditCardService;
+import com.nossocartao.proposta.shared.service.CreditCard.NewCreditCardRequest;
 import com.nossocartao.proposta.shared.service.FinancialAnalysis.FinancialAnalysisRequest;
 import com.nossocartao.proposta.shared.service.FinancialAnalysis.FinancialAnalysisService;
 import feign.FeignException;
@@ -16,6 +18,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.persistence.EntityManager;
 import java.net.URI;
+import java.util.Map;
 
 @RestController
 @RequestMapping("proposal")
@@ -25,6 +28,9 @@ public class ProposalController {
 
     @Autowired
     FinancialAnalysisService financialAnalysisService;
+
+    @Autowired
+    CreditCardService creditCardService;
 
     @PostMapping
     @Transactional

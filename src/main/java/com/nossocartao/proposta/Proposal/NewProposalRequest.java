@@ -33,7 +33,6 @@ public class NewProposalRequest {
 
     public NewProposalRequest(@NotBlank String document, @NotBlank @Email String email, @NotBlank String name,
                               @NotBlank String address, @NotNull @Positive BigDecimal salary) {
-        System.out.println("Passou");
         this.document = document;
         this.email = email;
         this.name = name;

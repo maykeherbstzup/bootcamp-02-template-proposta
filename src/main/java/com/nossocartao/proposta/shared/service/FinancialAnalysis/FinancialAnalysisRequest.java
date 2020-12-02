@@ -21,10 +21,10 @@ public class FinancialAnalysisRequest {
     }
 
     public static FinancialAnalysisRequest fromModel(Proposal proposal) {
-        FinancialAnalysisRequest analysisRequestDTO = new FinancialAnalysisRequest(proposal.getDocument(), proposal.getName(),
+        FinancialAnalysisRequest financialAnalysisRequest = new FinancialAnalysisRequest(proposal.getDocument(), proposal.getName(),
                 proposal.getId());
 
-        return analysisRequestDTO;
+        return financialAnalysisRequest;
     }
 
     public String getDocumento() {

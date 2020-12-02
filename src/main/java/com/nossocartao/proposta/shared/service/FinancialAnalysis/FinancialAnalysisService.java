@@ -27,15 +27,11 @@ public class FinancialAnalysisService {
     }
 
     private Map<String, String> getAnalysis(FinancialAnalysisRequest financialAnalysisRequest) {
-        Map<String, String> result = new HashMap<String, String>();
+        Map<String, String> result;
 
         try {
             result = this.financialAnalysisInterface.getAnalysis(financialAnalysisRequest);
-        } catch (FeignException e) {
-            if (!(e instanceof FeignException.UnprocessableEntity)) {
-                throw new ApiErrorException("financialAnalysis", e.getMessage(), HttpStatus.valueOf(e.status()));
-            }
-
+        } catch (FeignException.UnprocessableEntity e) {
             try {
                 result = new ObjectMapper().readValue(e.contentUTF8(), HashMap.class);
             } catch (JsonProcessingException ex){

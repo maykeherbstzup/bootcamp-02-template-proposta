@@ -40,6 +40,8 @@ public class Proposal {
     @Enumerated
     private ProposalStatus status;
 
+    private String creditCardNumber;
+
     @Deprecated
     public Proposal() {
     }
@@ -59,6 +61,10 @@ public class Proposal {
         this.salary = salary;
     }
 
+    private String sanitizeDocument(String document) {
+        return document.replace(".", "").replace("-", "").replace("/", "");
+    }
+
     public String getId() {
         return id;
     }
@@ -71,11 +77,11 @@ public class Proposal {
         return name;
     }
 
-    private String sanitizeDocument(String document) {
-        return document.replace(".", "").replace("-", "").replace("/", "");
-    }
-
     public void setStatus(ProposalStatus status) {
         this.status = status;
+    }
+
+    public void setCreditCardNumber(String creditCardNumber) {
+        this.creditCardNumber = creditCardNumber;
     }
 }

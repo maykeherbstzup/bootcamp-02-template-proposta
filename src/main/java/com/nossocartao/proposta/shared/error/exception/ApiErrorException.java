@@ -4,14 +4,14 @@ import org.springframework.http.HttpStatus;
 
 public class ApiErrorException extends RuntimeException {
     private HttpStatus httpStatus;
-    private String fieldName;
+    private String id;
     private String errorMessage;
 
-    public ApiErrorException(String fieldName, String errorMessage, HttpStatus httpStatus) {
+    public ApiErrorException(String id, String errorMessage, HttpStatus httpStatus) {
         super(errorMessage);
 
         this.httpStatus = httpStatus;
-        this.fieldName = fieldName;
+        this.id = id;
         this.errorMessage = errorMessage;
     }
 
@@ -19,8 +19,8 @@ public class ApiErrorException extends RuntimeException {
         return errorMessage;
     }
 
-    public String getFieldName() {
-        return fieldName;
+    public String getId() {
+        return id;
     }
 
     public HttpStatus getHttpStatus() {
