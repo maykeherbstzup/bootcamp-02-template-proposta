@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Map;
 
-@FeignClient(name = "AnalysisRequest", url = "http://localhost:9999/api")
+@FeignClient(name = "FinancialAnalysis", url = "http://localhost:9999/api")
 public interface FinancialAnalysisInterface {
     @RequestMapping(method = RequestMethod.POST, value = "/solicitacao")
     Map<String, String> getAnalysis(@RequestBody FinancialAnalysisRequest analysisRequestDTO);

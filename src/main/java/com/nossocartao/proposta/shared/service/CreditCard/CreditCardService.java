@@ -41,7 +41,7 @@ public class CreditCardService {
 
                 this.proposalRepository.save(proposal);
             } catch (FeignException e) {
-                LOGGER.info("Couldn't create new credit card for proposal: {}", proposal.getId());
+                LOGGER.info("Couldn't create new credit card for proposal: {}", proposal.getId(), e);
             }
         });
 

@@ -1,16 +1,16 @@
 package com.nossocartao.proposta.Proposal;
 
+import com.nossocartao.proposta.shared.TransactionExecutor;
+import com.nossocartao.proposta.shared.error.exception.ApiErrorException;
 import com.nossocartao.proposta.shared.service.CreditCard.CreditCardService;
 import com.nossocartao.proposta.shared.service.CreditCard.NewCreditCardRequest;
 import com.nossocartao.proposta.shared.service.FinancialAnalysis.FinancialAnalysisRequest;
 import com.nossocartao.proposta.shared.service.FinancialAnalysis.FinancialAnalysisService;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.persistence.PersistenceContext;
@@ -23,22 +23,21 @@ import java.util.Map;
 @RestController
 @RequestMapping("proposal")
 public class ProposalController {
-    @PersistenceContext
-    EntityManager em;
+    @Autowired
+    TransactionExecutor transactionExecutor;
 
     @Autowired
     FinancialAnalysisService financialAnalysisService;
 
     @Autowired
-    CreditCardService creditCardService;
+    ProposalRepository proposalRepository;
 
     @PostMapping
-    @Transactional
     public ResponseEntity<?> create(@RequestBody @Valid NewProposalRequest newProposalRequest,
                                     UriComponentsBuilder UriBuilder) {
         Proposal proposal = newProposalRequest.toModel();
 
-        em.persist(proposal);
+        transactionExecutor.saveAndCommit(proposal);
 
         FinancialAnalysisRequest financialAnalysisRequest = FinancialAnalysisRequest.fromModel(proposal);
 
@@ -48,10 +47,21 @@ public class ProposalController {
             proposal.setStatus(ProposalStatus.ELIGIBLE);
         }
 
-        em.persist(proposal);
+        transactionExecutor.updateAndCommit(proposal);
 
         URI locationURI = UriBuilder.path("proposal/{id}").buildAndExpand(proposal.getId()).toUri();
 
         return ResponseEntity.created(locationURI).build();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProposalResponse> getProposal(@PathVariable(value = "id") String id) {
+        Proposal proposal = this.proposalRepository.findById(id).orElseThrow(() -> new ApiErrorException("proposal",
+                "Proposta não encontrada", HttpStatus.NOT_FOUND));
+
+        ProposalResponse proposalResponse = ProposalResponse.fromModel(proposal);
+
+        return ResponseEntity.ok(proposalResponse);
+    }
+
 }
