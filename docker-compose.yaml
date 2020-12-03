@@ -1,5 +1,19 @@
 version: '3'
 services:
+  app:
+    image: "zupacademy/proposta:latest"
+    depends_on:
+      - postgres
+      - keycloak
+      - analise
+      - contas
+      - transacoes
+    ports:
+      - 8080:8080
+    environment:
+      DB_URL: "jdbc:postgresql://host.docker.internal:5432/proposta"
+      DB_USER: "postgres"
+      DB_PASSWORD: "password"
 
   zookeeper:
     image: "confluentinc/cp-zookeeper:5.2.1"
