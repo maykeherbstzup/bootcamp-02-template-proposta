@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 @Component
 public class TransactionExecutor {
     @PersistenceContext
-	private EntityManager manager;
+	public EntityManager manager;
 
 	@Transactional
 	public <T> T saveAndCommit(T obj) {

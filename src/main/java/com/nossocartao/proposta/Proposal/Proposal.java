@@ -1,5 +1,6 @@
 package com.nossocartao.proposta.Proposal;
 
+import com.nossocartao.proposta.CreditCard.CreditCard;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.util.Assert;
 
@@ -40,7 +41,8 @@ public class Proposal {
     @Enumerated
     private ProposalStatus status;
 
-    private String creditCardNumber;
+    @OneToOne(mappedBy = "proposal")
+    private CreditCard creditCard;
 
     @Deprecated
     public Proposal() {
@@ -95,9 +97,5 @@ public class Proposal {
 
     public void setStatus(ProposalStatus status) {
         this.status = status;
-    }
-
-    public void setCreditCardNumber(String creditCardNumber) {
-        this.creditCardNumber = creditCardNumber;
     }
 }
