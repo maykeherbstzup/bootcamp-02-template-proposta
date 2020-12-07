@@ -1,4 +1,4 @@
-package com.nossocartao.proposta.Biometry;
+package com.nossocartao.proposta.CreditCard;
 
 import com.nossocartao.proposta.CreditCard.CreditCard;
 import org.hibernate.annotations.GenericGenerator;

@@ -1,7 +1,4 @@
-package com.nossocartao.proposta.Biometry;
-
-import com.nossocartao.proposta.CreditCard.CreditCard;
-import com.nossocartao.proposta.shared.TransactionExecutor;
+package com.nossocartao.proposta.CreditCard;
 
 import javax.persistence.EntityManager;
 import javax.validation.constraints.NotBlank;

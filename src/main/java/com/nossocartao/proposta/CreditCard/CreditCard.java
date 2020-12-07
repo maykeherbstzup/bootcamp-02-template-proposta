@@ -24,6 +24,9 @@ public class CreditCard {
     @OneToOne
     private Proposal proposal;
 
+    @OneToOne(mappedBy = "creditCard")
+    private CreditCardBlock creditCardBlock;
+
     @Deprecated
     public CreditCard() {}
 
@@ -33,5 +36,9 @@ public class CreditCard {
 
         this.cardNumber = cardNumber;
         this.proposal = proposal;
+    }
+
+    public boolean isBlocked() {
+        return this.creditCardBlock != null;
     }
 }

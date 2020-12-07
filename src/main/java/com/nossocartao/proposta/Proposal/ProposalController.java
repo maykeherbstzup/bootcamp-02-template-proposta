@@ -2,23 +2,16 @@ package com.nossocartao.proposta.Proposal;
 
 import com.nossocartao.proposta.shared.TransactionExecutor;
 import com.nossocartao.proposta.shared.error.exception.ApiErrorException;
-import com.nossocartao.proposta.shared.service.CreditCard.CreditCardService;
-import com.nossocartao.proposta.shared.service.CreditCard.NewCreditCardRequest;
 import com.nossocartao.proposta.shared.service.FinancialAnalysis.FinancialAnalysisRequest;
 import com.nossocartao.proposta.shared.service.FinancialAnalysis.FinancialAnalysisService;
-import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import javax.validation.Valid;
-import javax.persistence.EntityManager;
 import java.net.URI;
-import java.util.Map;
 
 @RestController
 @RequestMapping("proposal")

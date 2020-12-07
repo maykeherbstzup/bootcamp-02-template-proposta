@@ -1,19 +1,19 @@
 version: '3'
 services:
-  app:
-    image: "zupacademy/proposta:latest"
-    depends_on:
-      - postgres
-      - keycloak
-      - analise
-      - contas
-      - transacoes
-    ports:
-      - 8080:8080
-    environment:
-      DB_URL: "jdbc:postgresql://host.docker.internal:5432/proposta"
-      DB_USER: "postgres"
-      DB_PASSWORD: "password"
+#  app:
+#    image: "zupacademy/proposta:latest"
+#    depends_on:
+#      - postgres
+#      - keycloak
+#      - analise
+#      - contas
+#      - transacoes
+#    ports:
+#      - 8080:8080
+#    environment:
+#      DB_URL: "jdbc:postgresql://host.docker.internal:5432/proposta"
+#      DB_USER: "postgres"
+#      DB_PASSWORD: "password"
 
   zookeeper:
     image: "confluentinc/cp-zookeeper:5.2.1"
@@ -69,7 +69,7 @@ services:
       DB_VENDOR: postgres
       DB_ADDR: postgres
       DB_PORT: 5432
-      DB_DATABASE: proposta
+      DB_DATABASE: keycloak
       DB_USER: postgres
       DB_PASSWORD: password
       KEYCLOAK_USER: admin

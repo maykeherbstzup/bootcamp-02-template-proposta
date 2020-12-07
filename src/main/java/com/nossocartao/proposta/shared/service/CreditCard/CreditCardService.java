@@ -5,6 +5,7 @@ import com.nossocartao.proposta.Proposal.Proposal;
 import com.nossocartao.proposta.Proposal.ProposalRepository;
 import com.nossocartao.proposta.Proposal.ProposalStatus;
 import com.nossocartao.proposta.shared.TransactionExecutor;
+import com.nossocartao.proposta.shared.error.exception.ApiErrorException;
 import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,26 +28,21 @@ public class CreditCardService {
     @Autowired
     TransactionExecutor transactionExecutor;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(CreditCardService.class);
-
-    @Scheduled(fixedDelay = 30000)
+    @Scheduled(fixedDelay = 300000)
     public Map<String, Object> createCreditCards() {
         List<Proposal> proposals = this.proposalRepository.findByStatusAndCreditCardCardNumberNull(ProposalStatus.ELIGIBLE);
 
         proposals.stream().forEach((proposal) -> {
-            NewCreditCardRequest newCreditCardRequest = NewCreditCardRequest.fromModel(proposal);
-
             try {
-                ResponseEntity<?> response = this.creditCardInterface.createNewCreditCard(newCreditCardRequest);
+                CreditCardResponse creditCardResponse = this.creditCardInterface.getCreditCardData(proposal.getId());
 
-                String[] path = response.getHeaders().getLocation().getPath().split("/");
-                String creditCardNumber = path[path.length - 1];
-
-                CreditCard creditCard = new CreditCard(creditCardNumber, proposal);
+                CreditCard creditCard = new CreditCard(creditCardResponse.getCardNumber(), proposal);
 
                 transactionExecutor.saveAndCommit(creditCard);
             } catch (FeignException e) {
-                LOGGER.error("Couldn't create new credit card for proposal: {}", proposal.getId(), e);
+                if (!(e instanceof FeignException.NotFound)) {
+                    throw e;
+                }
             }
         });
 
