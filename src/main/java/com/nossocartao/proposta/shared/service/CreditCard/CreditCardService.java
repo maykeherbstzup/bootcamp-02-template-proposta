@@ -29,7 +29,7 @@ public class CreditCardService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(CreditCardService.class);
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 30000)
     public Map<String, Object> createCreditCards() {
         List<Proposal> proposals = this.proposalRepository.findByStatusAndCreditCardCardNumberNull(ProposalStatus.ELIGIBLE);
 
