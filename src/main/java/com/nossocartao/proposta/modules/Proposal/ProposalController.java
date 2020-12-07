@@ -1,9 +1,9 @@
-package com.nossocartao.proposta.Proposal;
+package com.nossocartao.proposta.modules.Proposal;
 
 import com.nossocartao.proposta.shared.TransactionExecutor;
 import com.nossocartao.proposta.shared.error.exception.ApiErrorException;
-import com.nossocartao.proposta.shared.service.FinancialAnalysis.FinancialAnalysisRequest;
-import com.nossocartao.proposta.shared.service.FinancialAnalysis.FinancialAnalysisService;
+import com.nossocartao.proposta.services.FinancialAnalysis.FinancialAnalysisRequest;
+import com.nossocartao.proposta.services.FinancialAnalysis.FinancialAnalysisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

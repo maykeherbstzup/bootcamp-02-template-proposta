@@ -1,4 +1,4 @@
-package com.nossocartao.proposta.Proposal;
+package com.nossocartao.proposta.modules.Proposal;
 
 public enum ProposalStatus {
     ELIGIBLE, NOT_ELIGIBLE

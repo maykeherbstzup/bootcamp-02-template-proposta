@@ -1,4 +1,4 @@
-package com.nossocartao.proposta.Proposal;
+package com.nossocartao.proposta.modules.Proposal;
 
 import com.nossocartao.proposta.shared.validation.Document;
 import com.nossocartao.proposta.shared.validation.Unique;

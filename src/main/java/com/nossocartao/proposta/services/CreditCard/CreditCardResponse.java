@@ -1,7 +1,6 @@
-package com.nossocartao.proposta.shared.service.CreditCard;
+package com.nossocartao.proposta.services.CreditCard;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.nossocartao.proposta.CreditCard.CreditCard;
 
 public class CreditCardResponse {
     @JsonProperty("id")

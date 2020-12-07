@@ -1,4 +1,4 @@
-package com.nossocartao.proposta.Proposal;
+package com.nossocartao.proposta.modules.Proposal;
 
 import java.math.BigDecimal;
 

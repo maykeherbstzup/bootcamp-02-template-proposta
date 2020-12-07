@@ -30,6 +30,7 @@ public class GlobalErrorHandler {
     @ExceptionHandler(ApiErrorException.class)
     ErrorResponse onApiErrorException(ApiErrorException e) {
         ErrorResponse errorResponse = new ErrorResponse();
+
         errorResponse.addMessage(e.getId(), e.getErrorMessage());
 
         return errorResponse;

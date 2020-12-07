@@ -1,8 +1,6 @@
-package com.nossocartao.proposta.CreditCard;
+package com.nossocartao.proposta.modules.CreditCard;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 public class NewCreditCardBlockRequest {
     @NotBlank

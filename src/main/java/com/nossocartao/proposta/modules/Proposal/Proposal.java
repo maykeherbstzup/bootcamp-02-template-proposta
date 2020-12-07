@@ -1,12 +1,10 @@
-package com.nossocartao.proposta.Proposal;
+package com.nossocartao.proposta.modules.Proposal;
 
-import com.nossocartao.proposta.CreditCard.CreditCard;
+import com.nossocartao.proposta.modules.CreditCard.CreditCard;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;

@@ -1,4 +1,4 @@
-package com.nossocartao.proposta.CreditCard;
+package com.nossocartao.proposta.modules.CreditCard;
 
 import javax.persistence.EntityManager;
 import javax.validation.constraints.NotBlank;

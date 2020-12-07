@@ -1,6 +1,6 @@
-package com.nossocartao.proposta.shared.service.FinancialAnalysis;
+package com.nossocartao.proposta.services.FinancialAnalysis;
 
-import com.nossocartao.proposta.Proposal.Proposal;
+import com.nossocartao.proposta.modules.Proposal.Proposal;
 
 import javax.validation.constraints.NotBlank;
 

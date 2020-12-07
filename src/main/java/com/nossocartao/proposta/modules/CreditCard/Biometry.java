@@ -1,6 +1,5 @@
-package com.nossocartao.proposta.CreditCard;
+package com.nossocartao.proposta.modules.CreditCard;
 
-import com.nossocartao.proposta.CreditCard.CreditCard;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.util.Assert;
 
