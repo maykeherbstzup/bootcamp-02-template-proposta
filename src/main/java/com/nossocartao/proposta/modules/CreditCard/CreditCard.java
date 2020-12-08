@@ -7,6 +7,7 @@ import org.springframework.util.Assert;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "credit_card", uniqueConstraints = @UniqueConstraint(name = "unique_card_number", columnNames =
@@ -31,13 +32,16 @@ public class CreditCard {
     @OneToOne(mappedBy = "creditCard")
     private CreditCardBlock creditCardBlock;
 
+    @OneToMany(mappedBy = "creditCard")
+    private List<TravelNotice> travelNotice;
+
     @Deprecated
     public CreditCard() {}
 
     public CreditCard(@NotBlank String cardNumber, @NotBlank Proposal proposal, @NotNull CreditCardStatus status) {
         Assert.hasText(cardNumber, "Card number shouldn't be blank");
         Assert.notNull(proposal, "Proposal shouldn't be null");
-        Assert.notNull(status, "Atatus shouldn't be null");
+        Assert.notNull(status, "Status shouldn't be null");
 
         this.cardNumber = cardNumber;
         this.proposal = proposal;

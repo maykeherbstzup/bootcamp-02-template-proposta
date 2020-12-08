@@ -67,4 +67,20 @@ public class CreditCardController {
 
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/{id}/travel-notice")
+    public ResponseEntity<?> travelNotice(@PathVariable(value = "id") String id,
+                                          @RequestBody @Valid NewTravelNoticeRequest newTravelNoticeRequest) {
+        CreditCard creditCard = em.find(CreditCard.class, id);
+
+        if (creditCard == null) {
+            throw new ApiErrorException("creditCardId", "Cartão não encontrado", HttpStatus.NOT_FOUND);
+        }
+
+        TravelNotice travelNotice = newTravelNoticeRequest.toModel(creditCard);
+
+        transactionExecutor.saveAndCommit(travelNotice);
+
+        return ResponseEntity.ok().build();
+    }
 }

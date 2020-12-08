@@ -20,6 +20,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                                         "nossoCartao:write")
                                 .antMatchers(HttpMethod.POST, "/api/credit-card/{id}/block").hasAuthority(
                                         "nossoCartao:write")
+                                .antMatchers(HttpMethod.POST, "/api/credit-card/{id}/travel-notice").hasAuthority(
+                                        "nossoCartao:write")
                                 .antMatchers("/actuator/prometheus*").permitAll()
                                 .anyRequest().authenticated()
                 )
