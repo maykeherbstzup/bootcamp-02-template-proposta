@@ -12,5 +12,9 @@ public interface CreditCardInterface {
 
     @PostMapping(path = "/api/cartoes/{id}/bloqueios")
     Map<String, String> blockCreditCard(@PathVariable(name="id") String creditCardNumber,
-                                        @RequestBody Map<String, String>blockRequest);
+                                        @RequestBody CreditCardBlockRequest creditCardBlockRequest);
+
+    @PostMapping(path = "/api/cartoes/{id}/avisos")
+    Map<String, String> sendTravelNotice(@PathVariable(name="id") String creditCardNumber,
+                                        @RequestBody TravelNoticeRequest travelNoticeRequest);
 }

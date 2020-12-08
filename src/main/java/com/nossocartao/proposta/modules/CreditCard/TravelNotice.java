@@ -44,4 +44,12 @@ public class TravelNotice {
         this.userAgent = userAgent;
         this.creditCard = creditCard;
     }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
 }

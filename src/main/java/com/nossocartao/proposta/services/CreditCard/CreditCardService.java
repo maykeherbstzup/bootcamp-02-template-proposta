@@ -21,16 +21,13 @@ import java.util.Map;
 
 @Component
 public class CreditCardService {
+    private static Logger logger = LoggerFactory.getLogger(CreditCardService.class);
     @Autowired
     CreditCardInterface creditCardInterface;
-
     @Autowired
     ProposalRepository proposalRepository;
-
     @Autowired
     TransactionExecutor transactionExecutor;
-
-    private static Logger logger = LoggerFactory.getLogger(CreditCardService.class);
 
     @Scheduled(fixedDelayString = "${credit_card.get_number.interval}")
     public Map<String, Object> getCreditCardNumber() {
@@ -53,23 +50,37 @@ public class CreditCardService {
         return null;
     }
 
-    public boolean blockCreditCard(String cardNumber) {
-            try {
-                Map<String, String> requestBody = new HashMap<>();
-                requestBody.put("sistemaResponsavel", "teste");
+    public void blockCreditCard(String cardNumber) {
+        try {
+            CreditCardBlockRequest creditCardBlockRequest = new CreditCardBlockRequest("Teste");
 
-                Map<String, String> result = this.creditCardInterface.blockCreditCard(cardNumber, requestBody);
+            Map<String, String> result = this.creditCardInterface.blockCreditCard(cardNumber, creditCardBlockRequest);
 
-                if (result != null && "BLOQUEADO".equals(result.get("resultado"))) {
-                    return true;
-                }
-
-                return false;
-            } catch (FeignException e) {
-                logger.error("Couldn't block credit card");
-
+            if (result == null || !("BLOQUEADO".equals(result.get("resultado")))) {
                 throw new ApiErrorException("creditCard", "Não foi possível bloquear o cartão, tente novamente mais" +
                         " tarde", HttpStatus.BAD_REQUEST);
             }
+        } catch (FeignException e) {
+            logger.error("Couldn't block credit card", e);
+
+            throw new ApiErrorException("creditCard", "Não foi possível bloquear o cartão, tente novamente mais" +
+                    " tarde", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public void sendTravelNotice(String cardNumber, TravelNoticeRequest travelNoticeRequest) {
+        try {
+            Map<String, String> result = this.creditCardInterface.sendTravelNotice(cardNumber, travelNoticeRequest);
+
+            if (result == null || !("CRIADO".equals(result.get("resultado")))) {
+                throw new ApiErrorException("creditCard", "Não foi possível enviar o aviso de viagem, tente novamente" +
+                        " mais tarde", HttpStatus.BAD_REQUEST);
+            }
+        } catch (FeignException e) {
+            logger.error("Couldn't block credit card", e);
+
+            throw new ApiErrorException("creditCard", "Não foi possível enviar o aviso de viagem, tente novamente" +
+                    " mais tarde", HttpStatus.BAD_REQUEST);
+        }
     }
 }

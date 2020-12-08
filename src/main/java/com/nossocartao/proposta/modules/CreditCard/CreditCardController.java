@@ -1,6 +1,8 @@
 package com.nossocartao.proposta.modules.CreditCard;
 
+import com.nossocartao.proposta.services.CreditCard.CreditCardBlockRequest;
 import com.nossocartao.proposta.services.CreditCard.CreditCardService;
+import com.nossocartao.proposta.services.CreditCard.TravelNoticeRequest;
 import com.nossocartao.proposta.shared.TransactionExecutor;
 import com.nossocartao.proposta.shared.error.exception.ApiErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +80,11 @@ public class CreditCardController {
         }
 
         TravelNotice travelNotice = newTravelNoticeRequest.toModel(creditCard);
+
+        TravelNoticeRequest travelNoticeRequest = new TravelNoticeRequest(travelNotice.getDestination(),
+                travelNotice.getEndDate().toString());
+
+        this.creditCardService.sendTravelNotice(creditCard.getCardNumber(), travelNoticeRequest);
 
         transactionExecutor.saveAndCommit(travelNotice);
 
