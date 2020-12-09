@@ -35,6 +35,9 @@ public class CreditCard {
     @OneToMany(mappedBy = "creditCard")
     private List<TravelNotice> travelNotice;
 
+    @OneToMany(mappedBy = "creditCard")
+    private List<DigitalWallet> digitalWallet;
+
     @Deprecated
     public CreditCard() {}
 
@@ -62,5 +65,9 @@ public class CreditCard {
 
     public String getCardNumber() {
         return cardNumber;
+    }
+
+    public List<DigitalWallet> getDigitalWallet() {
+        return digitalWallet;
     }
 }

@@ -83,4 +83,23 @@ public class CreditCardService {
                     " mais tarde", HttpStatus.BAD_REQUEST);
         }
     }
+
+    public String associateDigitalWallet(String cardNumber, DigitalWalletRequest digitalWalletRequest) {
+        try {
+            Map<String, String> result = this.creditCardInterface.associateDigitalWallet(cardNumber,
+                    digitalWalletRequest);
+
+            if (result != null && "ASSOCIADA".equals(result.get("resultado"))) {
+                return result.get("id");
+            }
+
+            throw new ApiErrorException("creditCard", "Não foi possível associar a carteira digital, tente " +
+                    "novamente mais tarde", HttpStatus.BAD_REQUEST);
+        } catch (FeignException e) {
+            logger.error("Couldn't block credit card", e);
+
+            throw new ApiErrorException("creditCard", "Não foi possível associar a carteira digital, tente " +
+                    "novamente mais tarde", HttpStatus.BAD_REQUEST);
+        }
+    }
 }

@@ -17,4 +17,8 @@ public interface CreditCardInterface {
     @PostMapping(path = "/api/cartoes/{id}/avisos")
     Map<String, String> sendTravelNotice(@PathVariable(name="id") String creditCardNumber,
                                         @RequestBody TravelNoticeRequest travelNoticeRequest);
+
+    @PostMapping(path = "/api/cartoes/{id}/carteiras")
+    Map<String, String> associateDigitalWallet(@PathVariable(name="id") String cardNumber,
+                                               @RequestBody DigitalWalletRequest digitalWalletRequest);
 }

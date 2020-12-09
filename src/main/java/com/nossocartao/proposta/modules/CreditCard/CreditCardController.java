@@ -1,7 +1,7 @@
 package com.nossocartao.proposta.modules.CreditCard;
 
-import com.nossocartao.proposta.services.CreditCard.CreditCardBlockRequest;
 import com.nossocartao.proposta.services.CreditCard.CreditCardService;
+import com.nossocartao.proposta.services.CreditCard.DigitalWalletRequest;
 import com.nossocartao.proposta.services.CreditCard.TravelNoticeRequest;
 import com.nossocartao.proposta.shared.TransactionExecutor;
 import com.nossocartao.proposta.shared.error.exception.ApiErrorException;
@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("credit-card")
@@ -87,6 +88,39 @@ public class CreditCardController {
         this.creditCardService.sendTravelNotice(creditCard.getCardNumber(), travelNoticeRequest);
 
         transactionExecutor.saveAndCommit(travelNotice);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{id}/digital-wallet")
+    public ResponseEntity<?> associateDigitalWallet(@PathVariable(value = "id") String id,
+                                          @RequestBody @Valid NewDigitalWalletRequest newDigitalWalletRequest) {
+        CreditCard creditCard = em.find(CreditCard.class, id);
+
+        if (creditCard == null) {
+            throw new ApiErrorException("creditCardId", "Cartão não encontrado", HttpStatus.NOT_FOUND);
+        }
+
+        List<DigitalWallet> cardDigitalWallets = creditCard.getDigitalWallet();
+
+        DigitalWallet digitalWallet = newDigitalWalletRequest.toModel(creditCard);
+
+        cardDigitalWallets.stream().forEach(wallet -> {
+            if (wallet.getType().equals(digitalWallet.getType())) {
+                throw new ApiErrorException("type", "Cartão já associado a esta carteira digital",
+                        HttpStatus.UNPROCESSABLE_ENTITY);
+            }
+        });
+
+        DigitalWalletRequest digitalWalletRequest = new DigitalWalletRequest(digitalWallet.getEmail(),
+                digitalWallet.getType().getValue());
+
+        String walletId = this.creditCardService.associateDigitalWallet(creditCard.getCardNumber(),
+                digitalWalletRequest);
+
+        digitalWallet.setWalletId(walletId);
+
+        transactionExecutor.saveAndCommit(digitalWallet);
 
         return ResponseEntity.ok().build();
     }
