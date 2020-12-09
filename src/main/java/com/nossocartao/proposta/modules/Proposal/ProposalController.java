@@ -4,6 +4,8 @@ import com.nossocartao.proposta.shared.TransactionExecutor;
 import com.nossocartao.proposta.shared.error.exception.ApiErrorException;
 import com.nossocartao.proposta.services.FinancialAnalysis.FinancialAnalysisRequest;
 import com.nossocartao.proposta.services.FinancialAnalysis.FinancialAnalysisService;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +27,21 @@ public class ProposalController {
     @Autowired
     ProposalRepository proposalRepository;
 
+    private Tracer tracer;
+
+    public ProposalController(Tracer tracer) {
+        this.tracer = tracer;
+    }
+
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid NewProposalRequest newProposalRequest,
                                     UriComponentsBuilder UriBuilder) {
         Proposal proposal = newProposalRequest.toModel();
+
+        Span activeSpan = tracer.activeSpan();
+        activeSpan.setTag("user.email", proposal.getEmail());
+        activeSpan.setBaggageItem("user.email", proposal.getEmail());
+        activeSpan.log("user email " + proposal.getEmail());
 
         transactionExecutor.saveAndCommit(proposal);
 
