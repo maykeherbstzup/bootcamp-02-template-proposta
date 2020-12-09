@@ -1,6 +1,7 @@
 package com.nossocartao.proposta.modules.Proposal;
 
 import com.nossocartao.proposta.modules.CreditCard.CreditCard;
+import com.nossocartao.proposta.shared.converter.CryptoConverter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.util.Assert;
 
@@ -21,6 +22,7 @@ public class Proposal {
     private String id;
 
     @NotNull
+    @Convert(converter = CryptoConverter.class)
     private String document;
 
     @NotNull
